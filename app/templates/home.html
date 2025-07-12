@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}მთავარი გვერდი{% endblock %}
+
+{% block content %}
+  <h1 class="text-center">მოგესალმებით საქართველოს ისტორიული ნაგებობების გვერდზე!</h1>
+  <p class="text-center"><b>დაათვალიერე გამოქვაბულები, ეკლესიები და უძველესი ადგილები</b></p>
+
+  <div class="row mt-4">
+    {% for building in buildings %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <img src="{{ url_for('static', filename=building.image) }}" class="card-img-top" alt="{{ building.title }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ building.title }}</h5>
+            <p class="card-text">{{ building.description }}</p>
+
+            {% if current_user.is_authenticated and current_user.is_admin %}
+              <div class="d-flex justify-content-between mt-3">
+                <a href="{{ url_for('main.edit_building', id=building.id) }}" class="btn btn-sm btn-warning">რედაქტირება</a>
+                <form method="POST" action="{{ url_for('main.delete_building', id=building.id) }}"
+                      onsubmit="return confirm('ნამდვილად გსურს წაშლა?')">
+                  <button type="submit" class="btn btn-sm btn-danger">წაშლა</button>
+                </form>
+              </div>
+            {% endif %}
+
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <p class="text-center">ნაგებობები ჯერ არ არის დამატებული.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}ნაგებობის დამატება{% endblock %}
+
+{% block content %}
+  <h2 class="text-center mb-4">ნაგებობის დამატება</h2>
+
+  <div class="mx-auto" style="max-width: 500px;">
+    <form method="POST">
+      {{ form.hidden_tag() }}
+      <div class="mb-3">
+        {{ form.title.label(class="form-label") }}
+        {{ form.title(class="form-control") }}
+      </div>
+      <div class="mb-3">
+        {{ form.image.label(class="form-label") }}
+        {{ form.image(class="form-control") }}
+      </div>
+      <div class="mb-3">
+        {{ form.description.label(class="form-label") }}
+        {{ form.description(class="form-control", rows=4) }}
+      </div>
+      {{ form.submit(class="btn btn-success w-100") }}
+    </form>
+  </div>
+{% endblock %}

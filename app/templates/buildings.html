@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}ნაგებობები{% endblock %}
+
+{% block content %}
+  <h2 class="text-center mb-4">საქართველოს ნაგებობები</h2>
+  <div class="row">
+    {% for b in buildings %}
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 shadow">
+        <img src="{{ url_for('static', filename=b.image) }}" class="card-img-top" alt="{{ b.title }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ b.title }}</h5>
+          <p class="card-text">{{ b.description }}</p>
+          {% if current_user.is_authenticated and current_user.is_admin %}
+            <a href="{{ url_for('main.delete_building', id=b.id) }}" class="btn btn-danger">წაშლა</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}
